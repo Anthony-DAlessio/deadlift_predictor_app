@@ -6,6 +6,15 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.express as px
 
+#my own imports
+from joblib import load
+slr = load('assets/slr.joblib')
+slrf = load('assets/slrf.joblib')
+gb = load('assets/gb.joblib')
+gbf = load('assets/gbf.joblib')
+
+
+
 # Imports from this application
 from app import app
 
@@ -16,28 +25,34 @@ column1 = dbc.Col(
         dcc.Markdown(
             """
         
-            ## Your Value Proposition
+            ## Deliberate Training Focus
 
-            Emphasize how the app will benefit users. Don't emphasize the underlying technology.
+            Maybe you've reached the point in your training where more kilos don't come cheap. Maybe you're short on time. Maybe you're just curious.
 
-            ✅ RUN is a running app that adapts to your fitness levels and designs personalized workouts to help you improve your running.
+            Whether it's because your hamstrings can only take so much punishment every week or you have limited time to devote to assistance work,
+            knowing where to direct your limited training resources is key to optimizing your progress. Identifying the lifts that need help the most is 
+            a good start, and can help you decide whether deficit pulls or pause squats are a better use of those hamstrings right now.
 
-            ❌ RUN is the only intelligent running app that uses sophisticated deep neural net machine learning to make your run smarter because we believe in ML driven workouts.
+            The Raw Deadlift Predictor uses data from over three decades of global powerlifting meet results to give you a typical raw deadlift number for someone 
+            with your other stats. 
+            
+            If your actual pull is substantially higher, consider helping your squat catch up. 
+            If it's substantially lower, it might be time for more pulling volume.
+            If it's about the same, congratulations on being proportional. Must be nice. 
 
             """
         ),
-        dcc.Link(dbc.Button('Your Call To Action', color='primary'), href='/predictions')
+        dcc.Link(dbc.Button('Male Predictor', color='primary'), href='/male_predictor'),
+        dcc.Link(dbc.Button('Female Predictor', color='primary'), href='/female_predictor')
     ],
     md=4,
 )
 
-gapminder = px.data.gapminder()
-fig = px.scatter(gapminder.query("year==2007"), x="gdpPercap", y="lifeExp", size="pop", color="continent",
-           hover_name="country", log_x=True, size_max=60)
+
 
 column2 = dbc.Col(
     [
-        dcc.Graph(figure=fig),
+        html.Img(src='assets/gymcrop4.jpg')
     ]
 )
 
